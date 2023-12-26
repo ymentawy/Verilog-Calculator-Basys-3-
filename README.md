@@ -1,40 +1,65 @@
-# Verilog-Calculator-Basys-3-
-It is a calculator using Verilog HDL to be used on a FPGA(Basys 3)
-Program Design:
+# Verilog Calculator for Basys 3 FPGA
 
-This program calculates two numbers from 1 up to 99 and whether to add, subtract, multiply, or divide them. The program uses several modules:
+## Program Design
 
-1-	 Module Addition. This module takes two inputs of 7 bits and an output of 8 bits. It also takes the reset and the clock that has a constraint file. The addition is assigned using the input 1 “+” input 2.
+This Verilog program is designed to operate on a Basys 3 FPGA and functions as a calculator. It performs addition, subtraction, multiplication, and division operations on two 7-bit numbers ranging from 1 to 99. The program consists of several modules:
 
-2-	Module subtraction. This module takes an input of 7 bits and an output of 7 bits (input [6:0]). It also takes the input reset and the clock. The subtraction is assigned using the input 1 “-” input 2. It is always the case when the first number subtracts the second. For example, if the first number is 80 and the second is 82, so the result will be = -2
+1. **Module Addition:**
+   - Inputs: `input1`, `input2` (7 bits each)
+   - Outputs: `result` (8 bits)
+   - Additional Inputs: `reset`, `clock`
 
-3-	Module Multiplication: this module takes two inputs: the multiplier and the multiplicand. Both are 7 bits inputs. The output is a 14-bit (output [13:0] out). The result may vary from a 1-bit output to a 14-bit output.
+2. **Module Subtraction:**
+   - Inputs: `input1`, `input2` (7 bits each)
+   - Outputs: `result` (7 bits)
+   - Additional Inputs: `reset`, `clock`
+   - Note: The result is the difference between `input1` and `input2`.
 
-4-	Module division: this module takes up to 7-bit inputs: the numerator and the denominator. The output will always be approximated. For example, if the inputs are 23 and 13. So 23/13= 1.7777, the result will be approximated to 2
+3. **Module Multiplication:**
+   - Inputs: `multiplier`, `multiplicand` (7 bits each)
+   - Output: `result` (14 bits)
+   - Note: The multiplication module produces a 14-bit result.
 
+4. **Module Division:**
+   - Inputs: `numerator`, `denominator` (7 bits each)
+   - Output: `result` (approximated)
+   - Note: The division module outputs an approximated result.
 
-5-	Seven segments module: 
+5. **Seven Segments Module:**
+   - Displays digits 0-9 on the FPGA board.
+   - Utilizes a middle dot for adjusting the original number.
 
-•	It displays the seven segments on the FPGA board from 0-9. Also, the middle dot is instantiated in the module that appears when adjusting the original number as a barrier.
-•	The seven segments are called one time in the Calculator module. The output is changed more than four times according to the cases initialized.
+6. **Clock Divider Module:**
+   - Outputs a clock signal based on a specified parameter.
+   - Adjusts the frequency of the built-in clock on the FPGA board to the desired frequency.
 
-6-	Clock Divider module
-•	It outputs the clock based on the value of the parameter. It adjusts the frequency value of the built-in clock inside the FBGA board (100MHZ) to the desired frequency based on a parameter.
+7. **Increment Module:**
+   - Inputs: `switch` (single-bit input), `clock`, `reset`
+   - Output: `out` (4 bits)
+   - Increments the counter on the FPGA board when the switch button is used.
 
-7-	Increment Module:
-•	It takes an input called “switch,” a switch, a clock, and a reset. It also takes an output register of 4 bits called out. 
-•	This module increments the counter on the FPGA board when the switch button is used.
+8. **Calculator Module (Main):**
+   - Inputs: `clock`, increment switches, operation switches, and reset.
+   - Outputs: Seven segments display.
+   - Utilizes clock divider for clock adjustment.
+   - Uses increment module to handle counter incrementing.
+   - Performs addition, subtraction, multiplication, or division based on the selected operation.
 
+## Usage
 
+1. **Hardware Setup:**
+   - Connect the Basys 3 FPGA to the appropriate peripherals.
+   - Ensure proper power supply.
 
+2. **Programming FPGA:**
+   - Load the compiled bitstream onto the FPGA.
 
+3. **Operation:**
+   - Use the increment switches to adjust the input numbers.
+   - Select the operation using the operation switches.
+   - Observe the results on the seven-segment display.
 
+## Dependencies
 
-8-	 The last Main module is called the “Calculator,” This module takes an input clock, the four switches for incrementing the digits, the four switches for the operations, the output of the seven segments display, and reset.
-
--	Four switch inputs are used to increment the counter on the FPGA board. 
--	It also takes input a,d,m,s, subtraction, addition, multiplication, and division operations. 
--	It also uses the clock divider module.
--	The seven segments are called there to execute the seven segments display.
-
+Ensure the correct constraints and dependencies for the Basys 3 FPGA are met.
 
